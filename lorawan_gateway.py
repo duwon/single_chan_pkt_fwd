@@ -68,7 +68,7 @@ def select_freq():
     display.fill(0)
     display.text("Select Frequency", 10, 0, 1) 
     display.show()
-    time.sleep(3) 
+    time.sleep(2) 
 
     while True:
         if not btnA.value:
@@ -133,6 +133,7 @@ def gateway():
     display.text("Starting Gateway...", 15, 0, 1)
     display.text('{0} MHz, SF{1}'.format(gateway_freq, gateway_sf), 15, 10, 1)    
     display.show()
+    time.sleep(1)
     print('starting gateway...')
     try:
         proc = subprocess.Popen("./single_chan_pkt_fwd",
