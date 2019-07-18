@@ -70,7 +70,9 @@ SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
 display.text(str(SX127x_conf['freq']), 0, 10, 1)
 SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
 display.text(str(SX127x_conf['freq']), 0, 20, 1)
+display.show()
 time.sleep(3)
+
 """
             if not btnA.value:
                 f1 = open('global_conf.json','r')
