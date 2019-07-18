@@ -94,6 +94,7 @@ def gateway():
     # Clear Display
     display.fill(0)
     display.text("Starting Gateway...", 15, 0, 1)
+    display.text('{0} MHz, SF{1}'.format(gateway_freq, gateway_sf), 15, 10, 1)    
     display.show()
     print('starting gateway...')
     try:
@@ -118,6 +119,16 @@ def gateway():
             display.text(gateway_name, 15, 0, 1)
             display.text(gtwy_status, 0, 15, 1)
             display.text(gtwy_timestamp[11:23], 25, 25, 1)
+            if not btnA.value:
+                #with open('global_conf.json','r+') as fin
+                f1 = open('global_conf.json','r')
+                f2 = open('global_conf.json.tmp','w')
+                for line in f1:
+                    f2.write(line.replace(gateway_freq*1000000,gateway_freq*1000000+200000))
+                f1.close()
+                f2.close()
+            #if not btnC.value:
+
         elif new_line == "incoming packet...\n":
             display.fill(0)
             print('incoming pkt...')
