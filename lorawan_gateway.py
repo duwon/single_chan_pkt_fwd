@@ -71,7 +71,30 @@ display.text(str(SX127x_conf['freq']), 0, 10, 1)
 SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
 display.text(str(SX127x_conf['freq']), 0, 20, 1)
 time.sleep(3)
-
+"""
+            if not btnA.value:
+                f1 = open('global_conf.json','r')
+                f2 = open('global_conf.json.tmp','w')
+                for line in f1:
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))
+                    SX127x_conf['freq'] = SX127x_conf['freq'] - 200000
+                f1.close()
+                f2.close()
+                os.remove('global_conf.json')
+                os.rename('global_conf.json.tmp','global_conf.json')
+                break
+            if not btnC.value:
+                f1 = open('global_conf.json','r')
+                f2 = open('global_conf.json.tmp','w')
+                for line in f1:
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000))
+                    SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
+                f1.close()
+                f2.close()
+                os.remove('global_conf.json')
+                os.rename('global_conf.json.tmp','global_conf.json')
+                break  
+"""
 def stats():
     """Prints information about the Pi
     to a display
@@ -129,28 +152,7 @@ def gateway():
             display.text(gateway_name, 15, 0, 1)
             display.text(gtwy_status, 0, 15, 1)
             display.text(gtwy_timestamp[11:23], 25, 25, 1)
-            if not btnA.value:
-                f1 = open('global_conf.json','r')
-                f2 = open('global_conf.json.tmp','w')
-                for line in f1:
-                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))
-                    SX127x_conf['freq'] = SX127x_conf['freq'] - 200000
-                f1.close()
-                f2.close()
-                os.remove('global_conf.json')
-                os.rename('global_conf.json.tmp','global_conf.json')
-                break
-            if not btnC.value:
-                f1 = open('global_conf.json','r')
-                f2 = open('global_conf.json.tmp','w')
-                for line in f1:
-                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000))
-                    SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
-                f1.close()
-                f2.close()
-                os.remove('global_conf.json')
-                os.rename('global_conf.json.tmp','global_conf.json')
-                break             
+           
         elif new_line == "incoming packet...\n":
             display.fill(0)
             print('incoming pkt...')
