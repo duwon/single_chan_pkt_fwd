@@ -89,11 +89,7 @@ SpreadingFactor_t sf = SF7;
 uint16_t bw = 125;
 
 // Set center frequency
-<<<<<<< HEAD
 uint32_t freq = 902300000; // in Mhz! (902.3) 
-=======
-uint32_t freq = 868100000; // in Mhz! (868.1)
->>>>>>> 9a831b64170f43d34a48ef5a0b9d35bf56e73c63
 
 // Set location
 float lat = 0.0;
@@ -630,7 +626,7 @@ int main()
     si_other.sin_family = AF_INET;
 
     ifr.ifr_addr.sa_family = AF_INET;
-    strncpy(ifr.ifr_name, "eth0", IFNAMSIZ-1);
+    strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ-1);
     ioctl(s, SIOCGIFHWADDR, &ifr);
 
     /* display result */
