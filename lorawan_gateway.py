@@ -65,6 +65,12 @@ ttn_server = server_list[0]
 ttn_server_addr = ttn_server['address']
 
 def select_freq():
+    display.fill(0)
+    display.text("Select Frequency", 10, 0, 1)
+    display.text('{0} MHz, SF{1}'.format(gateway_freq, gateway_sf), 15, 10, 1)    
+    display.show()
+    time.sleep(3) 
+
     while True:
         if not btnA.value:
             f1 = open('global_conf.json','r')
