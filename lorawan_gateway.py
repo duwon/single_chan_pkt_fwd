@@ -65,11 +65,11 @@ ttn_server = server_list[0]
 ttn_server_addr = ttn_server['address']
 
 display.fill(0)
-display.text(str(SX127x_conf['freq']), 0, 0, 1)
+display.text(str(SX127x_conf['freq']), 0, 1)
 SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
-display.text(str(SX127x_conf['freq']), 0, 10, 1)
+display.text(str(SX127x_conf['freq']), 10, 1)
 SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
-display.text(str(SX127x_conf['freq']), 0, 20, 1)
+display.text(str(SX127x_conf['freq']), 20, 1)
 time.sleep(3)
 """
             if not btnA.value:
