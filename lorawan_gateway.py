@@ -54,7 +54,7 @@ with open('global_conf.json', 'r') as config:
     gateway_config = json.load(config)
 # parse `SX127x_conf`
 SX127x_conf = gateway_config['SX127x_conf']
-freq_conf = SX127x_conf['freq']*1
+freq_conf = SX127x_conf['freq']
 gateway_freq = SX127x_conf['freq']/1000000
 gateway_sf = SX127x_conf['spread_factor']
 # parse `gateway_conf`
@@ -127,6 +127,7 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
+                    global freq_conf
                     freq_conf -= 200000
                     f2.write(line.replace(str(SX127x_conf['freq']),str(freq_conf)))
                 f1.close()
@@ -138,6 +139,7 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
+                    global freq_conf
                     freq_conf += 200000
                     f2.write(line.replace(str(SX127x_conf['freq']),str(freq_conf)))
                 f1.close()
