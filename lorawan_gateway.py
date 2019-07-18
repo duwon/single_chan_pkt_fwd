@@ -202,7 +202,7 @@ while True:
     if not btnC.value:
         # show gateway configuration
         gateway_info()
-        
+
     gateway_freq = SX127x_conf['freq']/1000000
     display.show()
-    time.sleep(.1)
+    time.sleep(3)
