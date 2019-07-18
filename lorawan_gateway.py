@@ -48,7 +48,6 @@ mac_addr = hex(uuid.getnode()).replace('0x', '')
 print('Gateway ID: {0}:{1}:{2}:ff:ff:{3}:{4}:{5}'.format(mac_addr[0:2],mac_addr[2:4],
                                                          mac_addr[4:6],mac_addr[6:8],
                                                          mac_addr[8:10], mac_addr[10:12]))
-status_run_gateway = True
 
 # Parse `global_conf.json`
 with open('global_conf.json', 'r') as config:
@@ -109,7 +108,8 @@ def gateway():
     display.fill(0)
     display.text(gateway_name, 15, 0, 1)
     display.show()
-    while status_run_gateway:
+
+    while True:
         new_line = proc.stdout.readline().decode('utf-8')
         print(new_line)
         # grab new data on gateway status update
@@ -131,7 +131,7 @@ def gateway():
                 f2.close()
                 os.remove('global_conf.json')
                 os.rename('global_conf.json.tmp','global_conf.json')
-                status_run_gateway = False
+                break
             if not btnC.value:
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
@@ -141,7 +141,7 @@ def gateway():
                 f2.close()
                 os.remove('global_conf.json')
                 os.rename('global_conf.json.tmp','global_conf.json')
-                status_run_gateway = False             
+                break             
         elif new_line == "incoming packet...\n":
             display.fill(0)
             print('incoming pkt...')
