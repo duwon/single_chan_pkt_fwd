@@ -70,7 +70,7 @@ while True:
         f2 = open('global_conf.json.tmp','w')
         for line in f1:
             f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))                    
-        SX127x_conf['freq'] = SX127x_conf['freq']-200000
+        SX127x_conf['freq'] = SX127x_conf['freq'] - 200000
         f1.close()
         f2.close()
         os.remove('global_conf.json')
@@ -79,8 +79,8 @@ while True:
         f1 = open('global_conf.json','r')
         f2 = open('global_conf.json.tmp','w')
         for line in f1:
-            f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000))
-        SX127x_conf['freq'] = SX127x_conf['freq']+200000
+            f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000)))
+        SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
         f1.close()
         f2.close()
         os.remove('global_conf.json')
