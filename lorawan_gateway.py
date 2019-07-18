@@ -164,7 +164,6 @@ def gateway():
             display.text('timestamp: {0}'.format(pkt_tmst), 0, 20, 1)
         display.show()
     proc.kill()
-    gateway_freq = SX127x_conf['freq']/1000000
 
 def gateway_info():
     """Displays information about the LoRaWAN gateway.
@@ -203,6 +202,7 @@ while True:
     if not btnC.value:
         # show gateway configuration
         gateway_info()
-
+        
+    gateway_freq = SX127x_conf['freq']/1000000
     display.show()
     time.sleep(.1)
