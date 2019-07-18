@@ -54,7 +54,6 @@ with open('global_conf.json', 'r') as config:
     gateway_config = json.load(config)
 # parse `SX127x_conf`
 SX127x_conf = gateway_config['SX127x_conf']
-gateway_freq_conf = SX127x_conf['freq']
 gateway_freq = SX127x_conf['freq']/1000000
 gateway_sf = SX127x_conf['spread_factor']
 # parse `gateway_conf`
@@ -65,6 +64,13 @@ server_list = gateway_conf['servers']
 ttn_server = server_list[0]
 ttn_server_addr = ttn_server['address']
 
+display.fill(0)
+display.text(str(SX127x_conf['freq']), 0, 0, 1)
+SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
+display.text(str(SX127x_conf['freq']), 0, 10, 1)
+SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
+display.text(str(SX127x_conf['freq']), 0, 20, 1)
+time.sleep(3)
 
 def stats():
     """Prints information about the Pi
@@ -127,9 +133,8 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
-                    global gateway_freq
-                    gateway_freq_conf = gateway_freq_conf - 200000
-                    f2.write(line.replace(str(SX127x_conf['freq']),str(gateway_freq_conf)))
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))
+                    SX127x_conf['freq'] = SX127x_conf['freq'] - 200000
                 f1.close()
                 f2.close()
                 os.remove('global_conf.json')
@@ -139,9 +144,8 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
-                    global gateway_freq_conf
-                    gateway_freq_conf = gateway_freq_conf + 200000
-                    f2.write(line.replace(str(SX127x_conf['freq']),str(gateway_freq_conf)))
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000))
+                    SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
                 f1.close()
                 f2.close()
                 os.remove('global_conf.json')
@@ -208,6 +212,6 @@ while True:
         gateway_info()
 
     
-    gateway_freq = gateway_freq_conf/1000000
+    gateway_freq = SX127x_conf['freq']/1000000
     
     display.show()
