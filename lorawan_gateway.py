@@ -65,7 +65,7 @@ ttn_server = server_list[0]
 ttn_server_addr = ttn_server['address']
 
 display.fill(0)
-display.text(str(SX127x_conf['freq']), 0, 0, 1)
+display.text("Starting Gateway...", 15, 0, 1)
 SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
 display.text(str(SX127x_conf['freq']), 0, 10, 1)
 SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
