@@ -54,6 +54,7 @@ with open('global_conf.json', 'r') as config:
     gateway_config = json.load(config)
 # parse `SX127x_conf`
 SX127x_conf = gateway_config['SX127x_conf']
+freq_conf = SX127x_conf['freq']
 gateway_freq = SX127x_conf['freq']/1000000
 gateway_sf = SX127x_conf['spread_factor']
 # parse `gateway_conf`
@@ -126,8 +127,8 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
-                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))
-                    SX127x_conf['freq'] -= 200000
+                    freq_conf -= 200000
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(freq_conf)))
                 f1.close()
                 f2.close()
                 os.remove('global_conf.json')
@@ -137,8 +138,8 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
-                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000)))
-                    SX127x_conf['freq'] += 200000
+                    freq_conf += 200000
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(freq_conf)))
                 f1.close()
                 f2.close()
                 os.remove('global_conf.json')
@@ -191,6 +192,7 @@ while True:
                                          mac_addr[4:6]), 25, 15, 1)
     display.text('ff:{0}:{1}:{2}'.format(mac_addr[6:8],mac_addr[8:10],
                                          mac_addr[10:12]), 25, 25, 1)
+    time.sleep(3)
 
     # Radio Bonnet Buttons
     if not btnA.value:
@@ -203,6 +205,7 @@ while True:
         # show gateway configuration
         gateway_info()
 
+    SX127x_conf['freq'] = freq_conf
     gateway_freq = SX127x_conf['freq']/1000000
+    
     display.show()
-    time.sleep(3)
