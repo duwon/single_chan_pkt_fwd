@@ -126,7 +126,8 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
-                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000)))
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))
+                    SX127x_conf['freq'] -= 200000
                 f1.close()
                 f2.close()
                 os.remove('global_conf.json')
@@ -136,7 +137,8 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
-                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000)))
+                    SX127x_conf['freq'] += 200000
                 f1.close()
                 f2.close()
                 os.remove('global_conf.json')
@@ -162,6 +164,7 @@ def gateway():
             display.text('timestamp: {0}'.format(pkt_tmst), 0, 20, 1)
         display.show()
     proc.kill()
+    gateway_freq = SX127x_conf['freq']/1000000
 
 def gateway_info():
     """Displays information about the LoRaWAN gateway.
