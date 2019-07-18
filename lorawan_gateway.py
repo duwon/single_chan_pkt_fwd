@@ -64,14 +64,6 @@ server_list = gateway_conf['servers']
 ttn_server = server_list[0]
 ttn_server_addr = ttn_server['address']
 
-display.fill(0)
-display.text("Starting Gateway...", 15, 0, 1)
-SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
-display.text(str(SX127x_conf['freq']), 0, 10, 1)
-SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
-display.text(str(SX127x_conf['freq']), 0, 20, 1)
-display.show()
-time.sleep(3)
 
 """
             if not btnA.value:
@@ -121,6 +113,14 @@ def stats():
     time.sleep(3)
 
 def gateway():
+    display.fill(0)
+    display.text("Starting Gateway...", 15, 0, 1)
+    SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
+    display.text(str(SX127x_conf['freq']), 0, 10, 1)
+    SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
+    display.text(str(SX127x_conf['freq']), 0, 20, 1)
+    display.show()
+    time.sleep(3)
     """Runs the single channel packet forwarder,
     sends output to a display.
     """
