@@ -124,7 +124,7 @@ def gateway():
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
-                    f2.write(line.replace(gateway_freq*1000000,gateway_freq*1000000+200000))
+                    f2.write(line.replace(str(gateway_freq*1000000),str(gateway_freq*1000000+200000)))
                 f1.close()
                 f2.close()
             #if not btnC.value:

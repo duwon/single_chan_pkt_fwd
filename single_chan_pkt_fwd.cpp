@@ -105,7 +105,7 @@ bool is_pizero = false;
 // Overwritten by the ones set in global_conf.json
 SpreadingFactor_t sf = SF7;
 uint16_t bw = 125;
-uint32_t freq = 868100000; // in Mhz! (868.1)
+uint32_t freq = 915100000; // in Mhz! (868.1)
 
 
 // Servers
@@ -635,7 +635,7 @@ int main()
     strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ - 1);
   }
   else {
-    strncpy(ifr.ifr_name, "eth0", IFNAMSIZ - 1);
+    strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ - 1);
   }
   ioctl(s, SIOCGIFHWADDR, &ifr);
 
