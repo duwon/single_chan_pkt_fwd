@@ -15,6 +15,7 @@ from digitalio import DigitalInOut, Direction, Pull
 import board
 # Import the SSD1306 module.
 import adafruit_ssd1306
+import os
 
 # Button A
 btnA = DigitalInOut(board.D5)
@@ -47,6 +48,7 @@ mac_addr = hex(uuid.getnode()).replace('0x', '')
 print('Gateway ID: {0}:{1}:{2}:ff:ff:{3}:{4}:{5}'.format(mac_addr[0:2],mac_addr[2:4],
                                                          mac_addr[4:6],mac_addr[6:8],
                                                          mac_addr[8:10], mac_addr[10:12]))
+status_run_gateway = True
 
 # Parse `global_conf.json`
 with open('global_conf.json', 'r') as config:
@@ -62,6 +64,7 @@ gateway_name = gateway_conf['name']
 server_list = gateway_conf['servers']
 ttn_server = server_list[0]
 ttn_server_addr = ttn_server['address']
+
 
 def stats():
     """Prints information about the Pi
@@ -106,7 +109,7 @@ def gateway():
     display.fill(0)
     display.text(gateway_name, 15, 0, 1)
     display.show()
-    while True:
+    while status_run_gateway:
         new_line = proc.stdout.readline().decode('utf-8')
         print(new_line)
         # grab new data on gateway status update
@@ -120,15 +123,25 @@ def gateway():
             display.text(gtwy_status, 0, 15, 1)
             display.text(gtwy_timestamp[11:23], 25, 25, 1)
             if not btnA.value:
-                #with open('global_conf.json','r+') as fin
                 f1 = open('global_conf.json','r')
                 f2 = open('global_conf.json.tmp','w')
                 for line in f1:
                     f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000)))
                 f1.close()
                 f2.close()
-            #if not btnC.value:
-
+                os.remove('global_conf.json')
+                os.rename('global_conf.json.tmp','global_conf.json')
+                status_run_gateway = False
+            if not btnC.value:
+                f1 = open('global_conf.json','r')
+                f2 = open('global_conf.json.tmp','w')
+                for line in f1:
+                    f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))
+                f1.close()
+                f2.close()
+                os.remove('global_conf.json')
+                os.rename('global_conf.json.tmp','global_conf.json')
+                status_run_gateway = False             
         elif new_line == "incoming packet...\n":
             display.fill(0)
             print('incoming pkt...')
@@ -148,6 +161,7 @@ def gateway():
             display.text('RSSI: {0}dBm, Sz: {1}b'.format(pkt_rssi, pkt_size), 0, 10, 1)
             display.text('timestamp: {0}'.format(pkt_tmst), 0, 20, 1)
         display.show()
+    proc.kill()
 
 def gateway_info():
     """Displays information about the LoRaWAN gateway.
