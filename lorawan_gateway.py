@@ -64,35 +64,36 @@ server_list = gateway_conf['servers']
 ttn_server = server_list[0]
 ttn_server_addr = ttn_server['address']
 
-while True:
-    if not btnA.value:
-        f1 = open('global_conf.json','r')
-        f2 = open('global_conf.json.tmp','w')
-        for line in f1:
-            f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))                    
-        SX127x_conf['freq'] = SX127x_conf['freq'] - 200000
-        f1.close()
-        f2.close()
-        os.remove('global_conf.json')
-        os.rename('global_conf.json.tmp','global_conf.json')
-    if not btnC.value:
-        f1 = open('global_conf.json','r')
-        f2 = open('global_conf.json.tmp','w')
-        for line in f1:
-            f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000)))
-        SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
-        f1.close()
-        f2.close()
-        os.remove('global_conf.json')
-        os.rename('global_conf.json.tmp','global_conf.json')
-    if not btnB.value:
-        break
+def select_freq():
+    while True:
+        if not btnA.value:
+            f1 = open('global_conf.json','r')
+            f2 = open('global_conf.json.tmp','w')
+            for line in f1:
+                f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']-200000)))                    
+            SX127x_conf['freq'] = SX127x_conf['freq'] - 200000
+            f1.close()
+            f2.close()
+            os.remove('global_conf.json')
+            os.rename('global_conf.json.tmp','global_conf.json')
+        if not btnC.value:
+            f1 = open('global_conf.json','r')
+            f2 = open('global_conf.json.tmp','w')
+            for line in f1:
+                f2.write(line.replace(str(SX127x_conf['freq']),str(SX127x_conf['freq']+200000)))
+            SX127x_conf['freq'] = SX127x_conf['freq'] + 200000
+            f1.close()
+            f2.close()
+            os.remove('global_conf.json')
+            os.rename('global_conf.json.tmp','global_conf.json')
+        if not btnB.value:
+            break
 
-    gateway_freq = SX127x_conf['freq']/1000000
-    display.fill(0)
-    display.text('{0} MHz, SF{1}'.format(gateway_freq, gateway_sf), 15, 10, 1)
-    display.show()
-    time.sleep(0.5)
+        gateway_freq = SX127x_conf['freq']/1000000
+        display.fill(0)
+        display.text('{0} MHz, SF{1}'.format(gateway_freq, gateway_sf), 15, 10, 1)
+        display.show()
+        time.sleep(0.5)
 
 def stats():
     """Prints information about the Pi
@@ -201,7 +202,8 @@ while True:
                                          mac_addr[4:6]), 25, 15, 1)
     display.text('ff:{0}:{1}:{2}'.format(mac_addr[6:8],mac_addr[8:10],
                                          mac_addr[10:12]), 25, 25, 1)
-    time.sleep(3)
+    display.show()
+    time.sleep(1)
 
     # Radio Bonnet Buttons
     if not btnA.value:
@@ -209,12 +211,10 @@ while True:
         stats()
     if not btnB.value:
         # start the gateway
+        select_freq()
         gateway()
     if not btnC.value:
         # show gateway configuration
         gateway_info()
+    
 
-    
-    gateway_freq = SX127x_conf['freq']/1000000
-    
-    display.show()
